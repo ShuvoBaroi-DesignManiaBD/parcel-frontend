@@ -1,9 +1,15 @@
+import Container from "../Components/Shared/Container";
+
 
 const Home = () => {
     return (
-        <div>
-            <h2>This is home page</h2>
-        </div>
+        <Container>
+            <h2>Hello</h2>
+            <button className="primaryButton">
+                login
+            </button>
+        </Container>
+            
     );
 };
 

@@ -1,28 +1,34 @@
 /* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
  
-module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    'node_modules/preline/dist/*.js',
-  ],
-  theme: {
-    fontFamily: {
-      'jost': ['Jost', 'Inter'],
-      'cormorant': ["cormorant-garamond", 'serif'] // Ensure fonts with spaces have " " surrounding it.
-    },
-    extend: {
-      darkMode: 'class',
-      animation: {
-        
+const withMT = require("@material-tailwind/react/utils/withMT");
+module.exports = withMT(
+  {
+    content: [
+      "./index.html",
+      "./src/**/*.{js,ts,jsx,tsx}",
+      'node_modules/preline/dist/*.js',
+    ],
+    theme: {
+      extend: {
+        // darkMode: 'class',
+        animation: {
+          
+        },
+        colors: {
+          "primary": "#0B3C5C",
+          "primaryLight": "#98D5EB",
+          "PrimaryDark": "#062337",
+          "secondary": "#EC6B05",
+          "secondaryLight": "#062337",
+          "secondaryDark": "#062337",
+          "text": "#020C12",
+          "bg": "#EDF7FD",
+        }
       },
-      colors: {
-        
-      }
     },
-  },
-  plugins: [
-    require('preline/plugin'),
-  ],
-};
+    plugins: [
+      require('preline/plugin'),
+    ],
+  }
+)

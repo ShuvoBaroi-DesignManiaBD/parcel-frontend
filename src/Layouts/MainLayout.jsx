@@ -5,9 +5,11 @@ import Header from "../Pages/Shared/Header/Header";
 const MainLayout = () => {
     return (
         <>
-        <Header></Header>
-        <Outlet></Outlet>
-        <Footer></Footer>
+            <Header></Header>
+            <div className="min-h-[calc(100vh-310px)]">
+                <Outlet></Outlet>
+            </div>
+            <Footer></Footer>
         </>
     );
 };
