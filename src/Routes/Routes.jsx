@@ -19,16 +19,6 @@ const Routes = createBrowserRouter([
         path: '/',
         element: <Home></Home>
       },
-      {
-        path: 'dashboard',
-        element: <DashboardLayout></DashboardLayout>,
-        children: [
-          {
-            path: 'dashboard',
-            element: <Dashboard></Dashboard>
-          }
-        ]
-      },
     ],
   },
   {
@@ -38,6 +28,16 @@ const Routes = createBrowserRouter([
   {
     path: 'register',
     element: <Register></Register>
+  },
+  {
+    path: 'dashboard',
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: '/dashboard',
+        element: <Dashboard></Dashboard>
+      }
+    ]
   },
 ]);
 

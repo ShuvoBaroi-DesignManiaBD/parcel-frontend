@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { getAuth, updateProfile, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Configs/Firebase.config";
 import Swal from "sweetalert2";
 import toast from 'react-hot-toast';
+
 
 
 export const AuthContext = createContext({});
@@ -25,15 +26,23 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const createUserWithEmail = (email, password) => {
-        createUserWithEmailAndPassword(auth, email, password)
+    const createUserWithEmail = async (userData) => {
+        const email = userData.email;
+        const password = userData.password;
+        const name = userData.name;
+        const photo = userData.photo;
+        await createUserWithEmailAndPassword(auth, email, password)
             .then(user => {
                 setUser(user?.user);
-                Swal.fire({
+                console.log(user);
+                updateUserProfile(name, photo)
+                .then(Swal.fire({
                     icon: 'success',
                     title: 'Success!!!',
-                    text: 'You have successfully logged in',
-                })
+                    text: 'Your account created successfully',
+                }))
+                .catch(err => console.error(err));
+                // return user
             })
             .catch((error) => {
                 console.error(error);
@@ -113,9 +122,29 @@ export const AuthProvider = ({ children }) => {
             });
     }
 
+    // Update profile
+    // const updateUserProfile  = (image, name) => {
+    //     console.log(image, name);
+    //     return updateProfile(user, {
+    //         displayName: name, 
+    //         photoURL: image
+    //     });
+    // }
+
+    const updateUserProfile = async (name, photo) => {
+        // const auth = getAuth();
+        // Assuming 'user' is defined somewhere in your component or 
+        return updateProfile(auth.currentUser,{
+            displayName: name,
+            photoURL: photo
+        })
+    };
+    
+
     const authentication = {
         createUserWithEmail,
         signInWithEmail,
+        updateUserProfile,
         googleLogin,
         logout,
         resetPass,

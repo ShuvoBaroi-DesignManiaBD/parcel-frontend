@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Logo from "../Components/Shared/Logo";
 import { useAuth } from "../Hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import SocialLogin from "../Components/Shared/AuthElements/SocialLogin";
 
@@ -9,13 +9,12 @@ const Login = () => {
   const { signInWithEmail, user } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     await signInWithEmail(email, password);
-    // navigate("/");
+    navigate("/");
   }
   const togglePass = () => {
     setShowPassword(!showPassword);
@@ -28,8 +27,8 @@ const Login = () => {
       </p>;
     } else {
       return (
-        <main className="w-[100vw] h-[100vh] flex items-center justify-center max-w-md mx-auto my-auto p-6">
-          <div className="w-[700px] mt-7 bg-white border rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <main className="w-[100vw] h-[100vh] bg-bg flex items-center justify-center mx-auto my-auto p-6">
+          <div className="w-[450px] mt-7 bg-white border rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
             <div className="p-4 sm:p-7">
               <div className="text-center">
                 <Logo width="150" center={true}></Logo>
@@ -38,12 +37,12 @@ const Login = () => {
                 </h1>
                 <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                   Don't have an account yet? <span> </span>
-                  <a
-                    className="text-primary decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="../examples/html/signup.html"
+                  <Link
+                    className="text-primary font-semibold decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    to="/register"
                   >
                     Sign up here
-                  </a>
+                  </Link>
                 </p>
               </div>
               <div className="mt-5">
@@ -100,7 +99,7 @@ const Login = () => {
                           name="password"
                           minLength="6"
                           id="password"
-                          placeholder="••••••••"
+                          placeholder="Enter password"
                           className="py-3 px-4 block w-full border-2 focus:outline-primary border-gray-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                           required=""
                         />

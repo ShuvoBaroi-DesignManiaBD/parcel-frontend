@@ -16,9 +16,9 @@ const UserDropdown = () => {
         onClick={() => setOpen(!open)}
       >
         <img
-          className="w-8 h-auto rounded-full"
+          className="w-10 h-10 rounded-full bg-cover object-cover"
           src={user?.photoURL}
-          alt="Maria"
+          alt="Name"
         />
         
         <svg
