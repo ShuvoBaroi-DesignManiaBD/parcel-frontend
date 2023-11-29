@@ -1,0 +1,6 @@
+.BannerBg {
+    background-image: linear-gradient(rgba(9, 22, 29, 0.514),rgba(9, 22, 29, 0.74)),url('https://i.ibb.co/MNrpb1Q/hero-homepage-min.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}

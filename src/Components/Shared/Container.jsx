@@ -1,9 +1,9 @@
 
-const Container = ({children}) => {
+const Container = ({children}, className) => {
     return (
-        <div className="container mx-auto py-20">
+        <section className={`container mx-auto py-20 ${className}`}>
             {children}
-        </div>
+        </section>
     );
 };
 

@@ -6,6 +6,7 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Users from "../Pages/Dashboard/Users/Users";
 
 
 
@@ -36,7 +37,19 @@ const Routes = createBrowserRouter([
       {
         path: '/dashboard',
         element: <Dashboard></Dashboard>
-      }
+      },
+      {
+        path: '/dashboard/all-parcels',
+        element: <Dashboard></Dashboard>
+      },
+      {
+        path: '/dashboard/users',
+        element: <Users></Users>
+      },
+      {
+        path: '/dashboard/deliverymen',
+        element: <Dashboard></Dashboard>
+      },
     ]
   },
 ]);
