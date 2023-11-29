@@ -1,9 +1,14 @@
+
+
+import { MdOutlineFeedback } from "react-icons/md"; 
+
+import { HiOutlineClipboardList } from "react-icons/hi"; 
+import { BsBoxSeam } from "react-icons/bs"; 
 import { FiLogOut } from "react-icons/fi"; 
 import { FiSettings } from "react-icons/fi"; 
 import { FiUsers } from "react-icons/fi";
 import { BsBoxes } from "react-icons/bs";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { AiFillDashboard } from "react-icons/ai";
 import SideNavLink from "./SideNavLink";
 
 const SideNav = () => {
@@ -12,7 +17,11 @@ const SideNav = () => {
             <ul className="space-y-2">
             <SideNavLink Icon={AiOutlineDashboard} url="/dashboard" text="Statistics"></SideNavLink>
             <SideNavLink Icon={BsBoxes} url="all-parcels" text="All Parcels"></SideNavLink>
+            <SideNavLink Icon={BsBoxes} url="my-parcels" text="My Parcels"></SideNavLink>
+            <SideNavLink Icon={BsBoxSeam} url="book-parcel" text="Book a parcel"></SideNavLink>
             <SideNavLink Icon={FiUsers} url="users" text="All Users"></SideNavLink>
+            <SideNavLink Icon={HiOutlineClipboardList} url="delivery-list" text="My delivery list"></SideNavLink>
+            <SideNavLink Icon={MdOutlineFeedback} url="my-reviews" text="My Reviews"></SideNavLink>
             <SideNavLink imageURL="https://i.ibb.co/1K47SWT/delivery-man.webp" url="/dashboard/all-deliverymen" text="All Delivery Men"></SideNavLink>
             </ul>                            
 

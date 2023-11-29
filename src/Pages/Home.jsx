@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import HomeBanner from "../Components/Banners/HomeBanner/HomeBanner";
 import FeatureCard from "../Components/Cards/FeatureCard";
 import PrimaryButton from "../Components/Shared/Buttons/PrimaryButton";
+// import CountUp from "react-countup/build/CountUp";
+import CountUp from 'react-countup';
 
 
 const Home = () => {
@@ -40,6 +42,21 @@ const Home = () => {
                 </div>
 
             </Container>
+            {/* Statistics section */}
+            <div className="flex justify-center gap-8 bg-bg py-5">
+                <div className="text-center space-y-4 p-8 rounded-md ">
+                <CountUp end={1970} suffix=" +" className="primaryHeading text-5xl text-secondary"/>
+                <h3 className="text-lg font-semibold text-text">Parcel Booked</h3>
+                </div>
+                <div className="text-center space-y-4 p-8 rounded-md ">
+                <CountUp end={1670} suffix=" +" className="primaryHeading text-5xl text-secondary"/>
+                <h3 className="text-lg font-semibold text-text">Parcel Delivered</h3>
+                </div>
+                <div className="text-center space-y-4 p-8 rounded-md ">
+                <CountUp end={4470} suffix=" +" className="primaryHeading text-5xl text-secondary"/>
+                <h3 className="text-lg font-semibold text-text">Active Users</h3>
+                </div>
+            </div>
         </>
     );
 };

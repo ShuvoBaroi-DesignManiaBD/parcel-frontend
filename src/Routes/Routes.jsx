@@ -33,6 +33,7 @@ const Routes = createBrowserRouter([
   {
     path: 'dashboard',
     element: <DashboardLayout></DashboardLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: '/dashboard',
