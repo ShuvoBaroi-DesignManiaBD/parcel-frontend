@@ -7,9 +7,10 @@ import SocialLogin from "../Components/Shared/AuthElements/SocialLogin";
 import Swal from "sweetalert2";
 import { imageUpload } from "../APIs/utils";
 import { saveUser } from "../APIs/Auth";
+import LoadingSpinner from "../Components/Shared/LoadingSpinner";
 
 const Register = () => {
-    const { user, createUserWithEmail } = useAuth();
+    const { user, loading, createUserWithEmail } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
@@ -228,7 +229,7 @@ const Register = () => {
                                             type="submit"
                                             className="w-full primaryButton"
                                         >
-                                            Create account
+                                            {loading? <LoadingSpinner></LoadingSpinner> : "Create account"}
                                         </button>
                                     </div>
                                 </form>

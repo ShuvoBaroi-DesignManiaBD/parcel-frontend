@@ -13,7 +13,7 @@
 
 @layer components {
     .primaryButton {
-        @apply bg-primary text-white text px-6 py-2.5 rounded-md hover:bg-secondary
+        @apply bg-primary text-white text font-semibold px-6 py-2.5 rounded-md hover:bg-secondary
     }
 
     .primaryButtonSm {

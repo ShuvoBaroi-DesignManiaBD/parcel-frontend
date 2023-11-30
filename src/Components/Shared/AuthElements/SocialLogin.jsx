@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Hooks/useAuth";
 
 const SocialLogin = () => {
-    const {user, googleLogin} = useAuth();
+    const {googleLogin} = useAuth();
     const navigate = useNavigate();
-    console.log(user);
+    const {pathname} = useLocation();
     
 
     const handleLogin = (method) => {
       method();
-      navigate("/");
+      navigate(pathname);
     };
     return (
         <>

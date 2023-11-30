@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../Configs/Firebase.config";
 import Swal from "sweetalert2";
 import toast from 'react-hot-toast';
+import { getRole, saveUser } from "../APIs/Auth";
 
 
 
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }) => {
             console.log(currentUser);
             setUser(currentUser);
             setLoading(false);
+            console.log(user);
         });
 
         return () => {
@@ -36,11 +38,7 @@ export const AuthProvider = ({ children }) => {
                 setUser(user?.user);
                 console.log(user);
                 updateUserProfile(name, photo)
-                .then(Swal.fire({
-                    icon: 'success',
-                    title: 'Success!!!',
-                    text: 'Your account created successfully',
-                }))
+                .then(toast.success("Your account created successfully"))
                 .catch(err => console.error(err));
                 // return user
             })
@@ -58,12 +56,7 @@ export const AuthProvider = ({ children }) => {
         signInWithEmailAndPassword(auth, email, password)
             .then(user => {
                 setUser(user?.user);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!!!',
-                    text: 'You have successfully logged in',
-                });
-                
+                toast.success("You have successfully logged in")
             })
             .catch((error) => {
                 console.error(error);
@@ -77,13 +70,18 @@ export const AuthProvider = ({ children }) => {
 
     const googleLogin = () => {
         signInWithPopup(auth, googleProvider)
-            .then(user => {
+            .then(async user => {
                 setUser(user?.user);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!!!',
-                    text: 'You have successfully logged in',
-                })
+                const role = await getRole(user?.user?.email);
+                console.log(role);
+                role?.data === '' && saveUser(user.user)
+                .then(toast.success("You have successfully logged in"))
+                .catch(err => console.error(err));
+                // Swal.fire({
+                //     icon: 'success',
+                //     title: 'Success!!!',
+                //     text: 'You have successfully logged in',
+                // })
             })
             .catch(err => {
                 console.error(err)

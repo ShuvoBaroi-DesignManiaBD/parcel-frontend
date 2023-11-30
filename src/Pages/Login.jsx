@@ -1,20 +1,21 @@
 import { useState } from "react";
 import Logo from "../Components/Shared/Logo";
 import { useAuth } from "../Hooks/useAuth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import SocialLogin from "../Components/Shared/AuthElements/SocialLogin";
 
 const Login = () => {
   const { signInWithEmail, user } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const {pathname} = useLocation();
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     await signInWithEmail(email, password);
-    navigate("/");
+    navigate(pathname);
   }
   const togglePass = () => {
     setShowPassword(!showPassword);

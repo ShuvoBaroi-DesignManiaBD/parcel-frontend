@@ -1,10 +1,19 @@
+import { Outlet } from "react-router-dom";
+import { useAuth } from "../Hooks/useAuth";
+import Login from "../Pages/Login";
 
-const PrivateRoute = () => {
-    return (
-        <div>
-            <h2>This is private route</h2>
-        </div>
-    );
+const PrivateRoute = ({children}) => {
+
+    const { user } = useAuth();
+    if (user) {
+        return (
+            <>
+                {children}
+            </>
+        );
+    }
+
+    return <Login></Login>
 };
 
 export default PrivateRoute;

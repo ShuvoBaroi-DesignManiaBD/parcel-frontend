@@ -6,7 +6,12 @@ import DashboardLayout from "../Layouts/DashboardLayout";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
-import Users from "../Pages/Dashboard/Users/Users";
+import Users from "../Pages/Dashboard/Admin/Users";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import AllParcels from "../Pages/AllParcels";
+import Profile from "../Pages/Shared/Profile";
+import BookParcel from "../Pages/Dashboard/User/BookParcel";
 
 
 
@@ -32,7 +37,7 @@ const Routes = createBrowserRouter([
   },
   {
     path: 'dashboard',
-    element: <DashboardLayout></DashboardLayout>,
+    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
@@ -41,15 +46,23 @@ const Routes = createBrowserRouter([
       },
       {
         path: '/dashboard/all-parcels',
-        element: <Dashboard></Dashboard>
+        element: <AdminRoute><AllParcels></AllParcels></AdminRoute>
       },
       {
         path: '/dashboard/users',
-        element: <Users></Users>
+        element: <AdminRoute><Users></Users></AdminRoute>
       },
       {
         path: '/dashboard/deliverymen',
-        element: <Dashboard></Dashboard>
+        element: <AdminRoute><Dashboard></Dashboard></AdminRoute>
+      },
+      {
+        path: '/dashboard/profile',
+        element: <Profile></Profile>
+      },
+      {
+        path: '/dashboard/book-parcel',
+        element: <BookParcel></BookParcel>
       },
     ]
   },

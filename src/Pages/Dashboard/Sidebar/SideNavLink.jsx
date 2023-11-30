@@ -2,13 +2,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../../../Hooks/useAuth";
 
-const SideNavLink = ({Icon, url, text, imageURL}) => {
+const SideNavLink = ({Icon, url, text, imageURL, className}) => {
     const {logout} = useAuth();
     const activeStatus = ({isActive}) => isActive && "bg-bg";
     return (
         <div>
             <NavLink className={`flex text font-medium items-center gap-x-3.5 py-2 px-2.5 text-slate-700 rounded-lg hover:bg-bg dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600
-            ${activeStatus}
+            ${activeStatus} ${className}
             `}
                 to={url}
                 onClick={text === "Logout" ? logout : ''}
