@@ -1,6 +1,11 @@
 import axiosSecure from "."
 import { useAuth } from "../Hooks/useAuth";
 
+export const getUsers = async (page) => {
+    const data = await axiosSecure.get(`/users?page=${page}`);
+    return data
+}
+
 export const saveUser = async (userData) => {
     console.log(userData);
     const user = await getRole(userData.email);
@@ -23,3 +28,9 @@ export const getRole = async (email) => {
     return data
 }
 
+export const changeRole = async (email, role) => {
+    const userData = {role};
+    console.log(email, role);
+    const {data} = await axiosSecure.patch(`/changeRole/${email}`, userData);
+    return data
+}

@@ -45,23 +45,23 @@ const Routes = createBrowserRouter([
         element: <Dashboard></Dashboard>
       },
       {
-        path: '/dashboard/all-parcels',
+        path: 'all-parcels',
         element: <AdminRoute><AllParcels></AllParcels></AdminRoute>
       },
       {
-        path: '/dashboard/users',
+        path: 'users',
         element: <AdminRoute><Users></Users></AdminRoute>
       },
       {
-        path: '/dashboard/deliverymen',
+        path: 'deliverymen',
         element: <AdminRoute><Dashboard></Dashboard></AdminRoute>
       },
       {
-        path: '/dashboard/profile',
+        path: 'profile',
         element: <Profile></Profile>
       },
       {
-        path: '/dashboard/book-parcel',
+        path: 'book-parcel',
         element: <BookParcel></BookParcel>
       },
     ]

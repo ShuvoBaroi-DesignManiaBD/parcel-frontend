@@ -3,6 +3,7 @@ import Logo from '../../../Components/Shared/Logo';
 import SideNav from './Sidenav';
 
 const Sidebar = () => {
+    
     return (
         <div className='overflow-y-hidden col-span-1'>
             {/* Sidebar Toggle */}

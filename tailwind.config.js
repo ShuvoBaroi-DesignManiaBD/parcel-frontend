@@ -22,7 +22,7 @@ module.exports = withMT(
           "secondary": "#EC6B05",
           "secondaryLight": "#062337",
           "secondaryDark": "#062337",
-          "text": "#020C12",
+          "text": "#020c12bb",
           "bg": "#EDF7FD",
         }
       },

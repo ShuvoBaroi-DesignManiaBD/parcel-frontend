@@ -6,10 +6,11 @@ import { NavLink } from "react-router-dom";
 import { makeDeliveryMen } from "../../../APIs/userActions.";
 import { useAuth } from "../../../Hooks/useAuth";
 
-const UserNav = () => {
+const UserNav = ({refetch}) => {
     const {user} = useAuth()
     const handleAction = async () => {
-        makeDeliveryMen(user.email)
+        makeDeliveryMen(user.email);
+        refetch();
     }
     return (
         <div className="space-y-2">

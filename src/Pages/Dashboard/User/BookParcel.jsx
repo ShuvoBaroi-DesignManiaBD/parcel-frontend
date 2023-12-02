@@ -296,7 +296,7 @@ const BookParcel = () => {
                   </div>
                   <button
                     type="submit"
-                    className="primaryButton mt-5"
+                    className="primaryButton bordr-2 border"
                   >
                     Book now (${price})
                   </button>
