@@ -42,7 +42,7 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                 {myParcels?.map((parcel) => {
                     console.log(parcel);
                     const statusColor = parcel?.status && ((parcel.status == 'pending' && "bg-[#FAE11E] text-text") || (parcel.status == 'on the way' && "bg-teal-100 text-teal-800") || (parcel.status == 'delivered' && "bg-[#EBBE41] text-text")
-                        || (parcel.status == 'canceled' && "bg-[#E3C5C3] text-text"))
+                        || (parcel.status == 'canceled' && "bg-[#E3C5C3] text-text"));
                     return (
                         <tr key={parcel?._id || Date.now()}>
                             <td className="h-px w-px whitespace-nowrap">

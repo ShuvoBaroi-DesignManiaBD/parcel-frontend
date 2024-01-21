@@ -1,39 +1,39 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { changeRole, getUsers } from '../../../APIs/Auth';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../Shared/LoadingSpinner';
 import toast from 'react-hot-toast';
 import TableTd from '../Shared/TableTd';
+import ManageParcel from '../../Popups/ManageParcel';
+import { getAllDeliveryMan } from '../../../APIs/deliveryMan';
 
 const TableBody = ({allParcels, refetch, isFetching}) => {
-    // const users = getUsers();
-    // const { isFetching, refetch, data:users = [] } = useQuery({
-    //     queryKey: ['users'],
-    //     queryFn: async () => {
-    //         const res = await getUsers()
-    //         const data = await res.data;
-    //         console.log(data);
-    //         return data;
-    //     },
-    // })
+    const [open, setOpen] = useState(null);
+    const { refetch:fetchDeliveryMen, data:{deliveryMen, count} } = useQuery({
+        queryKey: ['listOfDeliveryMan'],
+        queryFn: async () => {
+            const res = await getAllDeliveryMan()
+            const data = await res.data;
+            console.log(data);
+            return data;
+        },
+        initialData: {deliveryMen:[], count:0}
+    });
     console.log(allParcels);
-    const handleChange = (email, role) => {
-        changeRole(email, role)
-        .then(()=> {
-            toast.success(`Successfully changed the role to ${role}`)
-            refetch();
-        })
-    }
+    const handleOpen = () => setOpen(!open);
 
     if (isFetching) {
         return <div className='w-[80vw] mx-auto flex justify-center items-center'><LoadingSpinner></LoadingSpinner></div>;
     } else {
         return (
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {allParcels?.map((parcel) => {
+                {allParcels?.map((parcel, index) => {
                     console.log(parcel);
+                    const statusColor = parcel?.status && ((parcel.status == 'pending' && "bg-[#FAE11E] text-text") || (parcel.status == 'on the way' && "bg-teal-100 text-teal-800") || (parcel.status == 'delivered' && "bg-[#EBBE41] text-text")
+                        || (parcel.status == 'canceled' && "bg-[#E3C5C3] text-text"));
                     return (
+                        <>
                         <tr key={parcel?._id || Date.now()}>
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="ps-6 py-3 pr-4">
@@ -85,7 +85,14 @@ const TableBody = ({allParcels, refetch, isFetching}) => {
                                 </div>
                             </td> */}
 
-                            <TableTd text={parcel?.status || "---"}></TableTd>
+                            {/* <TableTd text={parcel?.status || "---"}></TableTd> */}
+                            <td className="h-px w-px whitespace-nowrap">
+                                <div className="px-6 py-3 text-center">
+                                    <span className={`py-1 px-3 inline-flex items-center gap-x-1 text-xs font-medium rounded-full ${statusColor}`}>
+                                        {parcel?.status || "---"}
+                                    </span>
+                                </div>
+                            </td>
                             <TableTd text={parcel?.paymentStatus || "---"}></TableTd>
 
                             <td className="h-px w-px whitespace-nowrap">
@@ -101,7 +108,7 @@ const TableBody = ({allParcels, refetch, isFetching}) => {
                                         className="primaryButtonSm bg-secondary text-[10px] px-2.5 py-1.5 font-medium disabled:bg-gray-400"
                                         href="#"
                                         disabled={parcel?.role === 'admin' && true}
-                                        onClick={()=>handleChange(parcel?.email, 'admin')}
+                                        onClick={()=> setOpen(index)}
                                     >
                                         Manage
                                     </button>
@@ -125,6 +132,8 @@ const TableBody = ({allParcels, refetch, isFetching}) => {
                                 </div>
                             </td> */}
                         </tr>
+                        <ManageParcel isOpen={open} parcel={parcel} deliveryMen={deliveryMen} setOpen={setOpen} index={index} refetch={refetch}></ManageParcel>
+                        </>
                     );
                 })}
     

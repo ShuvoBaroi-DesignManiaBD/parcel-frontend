@@ -12,6 +12,7 @@ import TableBody from "../Components/Table/AllParcels/TableBody";
 
 const AllParcels = () => {
   const {user} = useAuth();
+  const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const TableHeadings = ["User", "Phone", "Booking Date", "Delivery Date", "Booking Status", "Payment Status", "Action"]
   const { isFetching, refetch, data:{allParcels: parcels, parcelsCount} } = useQuery({
@@ -28,6 +29,7 @@ const AllParcels = () => {
 const totalPages = Math.ceil(parcelsCount / 5);
 const pages = [... new Array(totalPages).fill(0)];
 console.log(page, pages, pages.length);
+const handleOpen = () => setOpen(!open);
     return (
         <>
   {/* Table Section */}
@@ -116,7 +118,7 @@ console.log(page, pages, pages.length);
                   {pages?.map((item, index) =>{
                     return <button key={index}
                     type="button"
-                    className={`py-2 px-3 text-sm font-medium rounded-lg border border-gray-200 text-text shadow-sm hover:bg-gray-50 ${page == index ? 'bg-primary text-white' : ''}`}
+                    className={`py-2 px-3 text-sm font-medium rounded-lg border border-gray-200 text-text shadow-sm hover:bg-gray-50 ${page == index ? 'bg-primary text-white hover:bg-primary' : ''}`}
                     onClick={()=> setPage(index)}
                   >
                     {index + 1}
