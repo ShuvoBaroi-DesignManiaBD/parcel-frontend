@@ -30,8 +30,8 @@ const TableBody = ({allParcels, refetch, isFetching}) => {
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {allParcels?.map((parcel, index) => {
                     console.log(parcel);
-                    const statusColor = parcel?.status && ((parcel.status == 'pending' && "bg-[#FAE11E] text-text") || (parcel.status == 'on the way' && "bg-teal-100 text-teal-800") || (parcel.status == 'delivered' && "bg-[#EBBE41] text-text")
-                        || (parcel.status == 'canceled' && "bg-[#E3C5C3] text-text"));
+                    const statusColor = parcel?.status && ((parcel.status == 'Pending' && "bg-[#FAE11E] text-text") || (parcel.status == 'On the way' && "bg-teal-100 text-teal-800") || (parcel.status == 'Delivered' && "bg-gray-300 text-text")
+                        || (parcel.status == 'Canceled' && "bg-[#E3C5C3] text-text"));
                     return (
                         <>
                         <tr key={parcel?._id || Date.now()}>

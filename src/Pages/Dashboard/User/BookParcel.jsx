@@ -40,7 +40,7 @@ const BookParcel = () => {
       const phone = form.phone.value;
       const type = form.parcelType.value;
       const weight = form.parcelWeight.value;
-      const status = "pending";
+      const status = "Pending";
       const receiversName = form.receiversName.value;
       const receiversPhone = form.receiversPhone.value;
       const deliveryAddress = form.deliveryAddress.value;

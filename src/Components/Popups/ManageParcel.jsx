@@ -1,9 +1,45 @@
 import { Dialog, DialogBody } from "@material-tailwind/react";
 import { CgCloseO } from "react-icons/cg";
+import { updateParcel } from "../../APIs/parcels";
+import toast from "react-hot-toast";
 
-const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen }) => {
-  const handleSubmit = (e) => {
-    console.log(e);
+const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const id = parcel?._id;
+    const {_id, ...prevData} = parcel;
+    const form = e.target;
+    const type = form.parcelType.value;
+    const status = form.status.value;
+    const receiversName = form.receiversName.value;
+    const receiversPhone = form.receiversPhone.value;
+    const deliveryMan = form.deliveryMan.value;
+    const deliveryAddress = form.deliveryAddress.value;
+    const deliveryManID = form.deliveryManId.value;
+    const deliveryDate = form.deliveryDate.value;
+
+    const data = {
+      ...prevData,
+      type,
+      status,
+      receiversName,
+      receiversPhone,
+      deliveryMan,
+      deliveryAddress,
+      deliveryManID,
+      deliveryDate
+    };
+
+    // console.log(data);
+    updateParcel(data, parcel?._id)
+      .then(()=>{
+        toast.success("Successfully updated") && setOpen(null);
+        refetch();
+      })
+      .catch(err => console.error(err));
+    form.reset()
+      console.log(data);
   }
   return (
     <Dialog open={isOpen === index} size="lg" className="max-h-[85vh] overflow-x-hidden rounded-lg">
@@ -14,7 +50,7 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen }) => {
         {/* <UpdateFood id={food?._id} foodData={food} setOpen={setOpen} refetch={refetch}></UpdateFood> */}
         <div className="mx-auto lg:py-16">
           <h2 className="mb-4 secondaryHeading text-center font-bold text-gray-900 dark:text-white">
-            Assign a delivery man 
+            Assign a delivery man
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4 sm:grid-cols-3 sm:gap-6 border-b-2 pb-8">
@@ -148,24 +184,44 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen }) => {
             </div>
             <div className="grid gap-4 sm:grid-cols-3 sm:gap-6 pt-8">
               <div>
-              <label
+                <label
                   htmlFor="deliveryData"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Select Delivery date
+                  Select Delivery man
                 </label>
                 <select
-                id="category"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              >
-                <option selected="">Select category</option>
-                {deliveryMen.map(man=> {
-                  return <>
-                  <option value={man._id}>{man.name}</option>
-                  </>
-                })}
-              </select>
+                  id="deliveryMan"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  name="deliveryManId"
+                >
+                  <option selected="">Select delivery man</option>
+                  {deliveryMen.map(man => {
+                    return <>
+                      <option value={man._id} key={man._id}>{man.name}</option>
+                    </>
+                  })}
+                </select>
               </div>
+              {/* Requested Delivery Date */}
+              <div className="grid-cols-3 lg:grid-cols-1">
+                <label
+                  htmlFor="deliveryData"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Change status to
+                </label>
+                <select
+                  id="category"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  name="status"
+                >
+                  <option value="On the way" selected="">On the way</option>
+                  <option value="Delivered">Delivered</option>
+                </select>
+
+              </div>
+              {/* Requested Delivery Date */}
               {/* Requested Delivery Date */}
               <div className="grid-cols-3 lg:grid-cols-1">
                 <label
@@ -176,8 +232,8 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen }) => {
                 </label>
                 <input
                   type="date"
-                  name="deliveryData"
-                  id="deliveryData"
+                  name="deliveryDate"
+                  id="deliveryDate"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Parcel delivery date"
                   defaultValue={Date.now()}
@@ -186,14 +242,22 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen }) => {
 
               </div>
               {/* Requested Delivery Date */}
-              <button
-              type="submit"
-              className="primaryButton bordr-2 border mt-5"
-            >
-              Assign
-            </button>
+              <div className="flex gap-3 justify-end col-span-3">
+                <button
+                  className="primaryButton px-10 bordr-2 border mt-5 bg-secondary"
+                >
+                  Update
+                </button>
+                <button
+                  type="submit"
+                  className="primaryButton bordr-2 border mt-5 px-10"
+                >
+                  Assign
+                </button>
+              </div>
+
             </div>
-            
+
           </form>
         </div>
       </DialogBody>
