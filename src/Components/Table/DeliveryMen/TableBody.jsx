@@ -6,7 +6,7 @@ import LoadingSpinner from '../../Shared/LoadingSpinner';
 import toast from 'react-hot-toast';
 import TableTd from '../Shared/TableTd';
 
-const TableBody = ({allUsers, refetch, isFetching}) => {
+const TableBody = ({deliveryMen, refetch, isFetching}) => {
     // const users = getUsers();
     // const { isFetching, refetch, data:users = [] } = useQuery({
     //     queryKey: ['users'],
@@ -31,7 +31,7 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
     } else {
         return (
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {allUsers?.map((user) => {
+                {deliveryMen?.map((user) => {
                     console.log(user);
                     return (
                         <tr key={user?._id || Date.now()}>
@@ -67,31 +67,12 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
                                 </div>
                             </td>
                     
-                            <TableTd text={user?.role}></TableTd>
                             <TableTd text={user?.phone || "---"}></TableTd>
-                        
-                            <td className="h-px w-px whitespace-nowrap">
-                                <div className="px-6 py-3 text-center">
-                                    <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
-                                        <svg
-                                            className="w-2.5 h-2.5"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width={16}
-                                            height={16}
-                                            fill="currentColor"
-                                            viewBox="0 0 16 16"
-                                        >
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-                                        </svg>
-                                        Active
-                                    </span>
-                                </div>
-                            </td>
 
-                            <TableTd text={user?.parcelBooked || 0}></TableTd>
-                            <TableTd text={user?.totalSpent || 0}></TableTd>
+                            <TableTd text={user?.parcelDelivered || 0}></TableTd>
+                            <TableTd text={user?.averageReview || 0}></TableTd>
 
-                            <td className="h-px w-px whitespace-nowrap">
+                            {/* <td className="h-px w-px whitespace-nowrap">
                                 <div className={`px-6 py-1.5 flex justify-center gap-4`}>
                                 <button
                                         className="primaryButtonSm text-[10px] px-2.5 py-1.5 font-medium disabled:bg-gray-400"
@@ -110,7 +91,7 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
                                     </button>
                                     
                                 </div>
-                            </td>
+                            </td> */}
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="px-6 py-1.5 flex gap-4">
                                     <a

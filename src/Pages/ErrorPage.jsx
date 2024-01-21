@@ -8,7 +8,6 @@ const ErrorPage = () => {
     return (
         <>
         <div className="flex flex-col items-center pb-20">
-            <Header></Header>
             <div className="container mx-auto flex flex-col justify-center items-center">
                 <img src="https://i.ibb.co/kX3Nyb6/404-parcel-error.webp" alt="404 error" className="sm:max-w-[550px] mx-auto" />
                 <h2 className="primaryHeading text-center mb-5 -mt-16">Oops! Nothing found.</h2>
@@ -18,7 +17,6 @@ const ErrorPage = () => {
                 </div>
             </div>
         </div>
-        <Footer></Footer>
         </>
     );
 };

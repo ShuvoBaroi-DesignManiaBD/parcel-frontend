@@ -3,7 +3,7 @@ import SideNavLink from "./SideNavLink";
 import { BsBoxSeam, BsBoxes } from "react-icons/bs";
 import { FiUsers } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
-import { makeDeliveryMen } from "../../../APIs/userActions.";
+import { makeDeliveryMen } from "../../../APIs/adminActions";
 import { useAuth } from "../../../Hooks/useAuth";
 
 const UserNav = ({refetch}) => {
@@ -13,12 +13,10 @@ const UserNav = ({refetch}) => {
         refetch();
     }
     return (
-        <div className="space-y-2">
+        <div className="">
                     <SideNavLink Icon={BsBoxes} url="my-parcels" text="My Parcels"></SideNavLink>
-                    <SideNavLink Icon={BsBoxSeam} url="book-parcel" text="Book a parcel" className="mb-4"></SideNavLink>
-                    <span className="py-5 my-5">
-                        <NavLink className='primaryButtonSm text-sm font-semibold' onClick={handleAction}>Be a deliveryman</NavLink>
-                    </span>
+                    <SideNavLink Icon={BsBoxSeam} url="book-parcel" text="Book a parcel" className="mt-3 mb-6"></SideNavLink>
+                    <NavLink className='primaryButtonSm text-sm font-semibold' onClick={handleAction}>Be a deliveryman</NavLink>
                 </div>
     );
 };

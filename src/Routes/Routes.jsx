@@ -12,6 +12,9 @@ import AdminRoute from "./AdminRoute";
 import AllParcels from "../Pages/AllParcels";
 import Profile from "../Pages/Shared/Profile";
 import BookParcel from "../Pages/Dashboard/User/BookParcel";
+import MyParcels from "../Pages/MyParcels";
+import UpdateParcel from "../Pages/UpdateParcel";
+import DeliveryMen from "../Pages/Dashboard/DeliveryMen/DeliveryMen";
 
 
 
@@ -49,12 +52,20 @@ const Routes = createBrowserRouter([
         element: <AdminRoute><AllParcels></AllParcels></AdminRoute>
       },
       {
+        path: 'my-parcels',
+        element: <MyParcels></MyParcels>
+      },
+      {
+        path: 'update-parcel',
+        element: <UpdateParcel></UpdateParcel>
+      },
+      {
         path: 'users',
         element: <AdminRoute><Users></Users></AdminRoute>
       },
       {
         path: 'deliverymen',
-        element: <AdminRoute><Dashboard></Dashboard></AdminRoute>
+        element: <AdminRoute><DeliveryMen></DeliveryMen></AdminRoute>
       },
       {
         path: 'profile',

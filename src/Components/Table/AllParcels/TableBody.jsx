@@ -6,7 +6,7 @@ import LoadingSpinner from '../../Shared/LoadingSpinner';
 import toast from 'react-hot-toast';
 import TableTd from '../Shared/TableTd';
 
-const TableBody = ({allUsers, refetch, isFetching}) => {
+const TableBody = ({allParcels, refetch, isFetching}) => {
     // const users = getUsers();
     // const { isFetching, refetch, data:users = [] } = useQuery({
     //     queryKey: ['users'],
@@ -17,7 +17,7 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
     //         return data;
     //     },
     // })
-
+    console.log(allParcels);
     const handleChange = (email, role) => {
         changeRole(email, role)
         .then(()=> {
@@ -31,10 +31,10 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
     } else {
         return (
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {allUsers?.map((user) => {
-                    console.log(user);
+                {allParcels?.map((parcel) => {
+                    console.log(parcel);
                     return (
-                        <tr key={user?._id || Date.now()}>
+                        <tr key={parcel?._id || Date.now()}>
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="ps-6 py-3 pr-4">
                                     <label htmlFor="hs-at-with-checkboxes-1" className="flex">
@@ -50,27 +50,24 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="ps-6 lg:ps-3 xl:ps-0 pe-6 py-3">
                                     <div className="flex items-center gap-x-3">
-                                        <img
-                                            className="inline-block h-[2.375rem] w-[2.375rem] rounded-full"
-                                            src={user?.photo}
-                                            alt="Image Description"
-                                        />
+                                        
                                         <div className="grow">
                                             <span className="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {user?.name}
+                                                {parcel?.name}
                                             </span>
                                             <span className="block text-sm text-gray-500">
-                                                {user?.email}
+                                                {parcel?.email}
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                     
-                            <TableTd text={user?.role}></TableTd>
-                            <TableTd text={user?.phone || "---"}></TableTd>
+                            <TableTd text={parcel?.phone}></TableTd>
+                            <TableTd text={parcel?.requestedDate || "---"}></TableTd>
+                            <TableTd text={parcel?.deliveryDate || "---"}></TableTd>
                         
-                            <td className="h-px w-px whitespace-nowrap">
+                            {/* <td className="h-px w-px whitespace-nowrap">
                                 <div className="px-6 py-3 text-center">
                                     <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
                                         <svg
@@ -86,32 +83,32 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
                                         Active
                                     </span>
                                 </div>
-                            </td>
+                            </td> */}
 
-                            <TableTd text={user?.parcelBooked || 0}></TableTd>
-                            <TableTd text={user?.totalSpent || 0}></TableTd>
+                            <TableTd text={parcel?.status || "---"}></TableTd>
+                            <TableTd text={parcel?.paymentStatus || "---"}></TableTd>
 
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className={`px-6 py-1.5 flex justify-center gap-4`}>
-                                <button
+                                {/* <button
                                         className="primaryButtonSm text-[10px] px-2.5 py-1.5 font-medium disabled:bg-gray-400"
-                                        disabled={user?.role === 'deliveryman' && true}
-                                        onClick={()=>handleChange(user?.email, 'deliveryman')}
+                                        disabled={parcel?.role === 'deliveryman' && true}
+                                        onClick={()=>handleChange(parcel?.email, 'deliveryman')}
                                     >
                                         Make deliveryman
-                                    </button>
+                                    </button> */}
                                     <button
                                         className="primaryButtonSm bg-secondary text-[10px] px-2.5 py-1.5 font-medium disabled:bg-gray-400"
                                         href="#"
-                                        disabled={user?.role === 'admin' && true}
-                                        onClick={()=>handleChange(user?.email, 'admin')}
+                                        disabled={parcel?.role === 'admin' && true}
+                                        onClick={()=>handleChange(parcel?.email, 'admin')}
                                     >
-                                        Make admin
+                                        Manage
                                     </button>
                                     
                                 </div>
                             </td>
-                            <td className="h-px w-px whitespace-nowrap">
+                            {/* <td className="h-px w-px whitespace-nowrap">
                                 <div className="px-6 py-1.5 flex gap-4">
                                     <a
                                         className="inline-flex items-center gap-x-1 text-sm text-green-500 font-semibold decoration-2 hover:underline dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -126,7 +123,7 @@ const TableBody = ({allUsers, refetch, isFetching}) => {
                                         Delete
                                     </a>
                                 </div>
-                            </td>
+                            </td> */}
                         </tr>
                     );
                 })}

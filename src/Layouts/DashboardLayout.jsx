@@ -12,7 +12,7 @@ const DashboardLayout = () => {
             <DashboardHeader></DashboardHeader>
             <div className="grid grid-cols-12 justify-between">
                 <Sidebar></Sidebar>
-                <div className="col-span-11 h-[calc(100vh-84px)] bg-[#f1faff] p-10">
+                <div className="col-span-11 h-[calc(100vh-84px)] bg-[#f9f9f9] p-10">
                 <Outlet></Outlet>
                 </div>
             </div>

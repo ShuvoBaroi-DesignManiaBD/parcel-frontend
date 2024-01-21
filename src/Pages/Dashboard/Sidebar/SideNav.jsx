@@ -12,7 +12,7 @@ import DeliveryManNav from "./DeliveryManNav";
 import SwitchRoleTab from "../../../Components/Tabs/SwitchRoleTab";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../../Components/Shared/LoadingSpinner";
-import { getRole } from "../../../APIs/Auth";
+import { getUser } from "../../../APIs/Auth";
 
 const SideNav = () => {
     // const [role, setRole] = useState(false);
@@ -22,13 +22,14 @@ const SideNav = () => {
     const { isFetching , refetch, data:role="" } = useQuery({
     queryKey: ['role'],
     queryFn: async () => {
-    const getUser = await getRole(user.email)
-    const role = await getUser.data.role;
+    const data = await getUser(user.email)
+    const role = await data.data.role;
     console.log(role);
     return role;
         },
       })
 
+      console.log(role);
     // useRole()
     //     .then(res => {
     //         console.log(res);
@@ -42,7 +43,7 @@ const SideNav = () => {
             { isFetching ?
                 <LoadingSpinner></LoadingSpinner>
             :
-                <ul className="space-y-2">
+                <nav className="space-y-2">
                 {/* Admin navingation */}
                 {role === 'admin' && <AdminNav></AdminNav>}
 
@@ -55,7 +56,7 @@ const SideNav = () => {
                 {/* User navigation */}
                 {(role === 'user' || role === '') && 
                 <UserNav refetch={refetch}></UserNav>}
-            </ul>
+            </nav>
             }
 
             <div className="border-t py-5">

@@ -1,25 +1,26 @@
 import { useState } from "react";
 import { getUsers } from "../../../APIs/Auth";
-import TableBody from "../../../Components/Table/UsersTable.jsx/TableBody";
 import TableHead from "../../../Components/Table/Shared/TableHead";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { getAllDeliveryMan } from "../../../APIs/deliveryMan";
+import TableBody from "../../../Components/Table/DeliveryMen/TableBody";
 
-const Users = () => {
+const DeliveryMen = () => {
   const [page, setPage] = useState(0);
-  const labels = ['Name', 'Role', 'Phone', 'Status', 'Parcel booked', 'Total spent ($)', 'Change role', 'Actions']
-  const { isFetching, refetch, data:{allUsers, usersCount} } = useQuery({
-    queryKey: ['users', page],
+  const labels = ['Name', 'Phone', 'Parcel delivered', 'Average review', 'Actions']
+  const { isFetching, refetch, data:{deliveryMen, count} } = useQuery({
+    queryKey: ['deliveryMen', page],
     queryFn: async () => {
-        const res = await getUsers(page)
+        const res = await getAllDeliveryMan(page)
         const data = await res.data;
         console.log(data);
         return data;
     },
-    initialData: {allUsers:[], usersCount:0}
+    initialData: {deliveryMen:[], count:0}
 });
 
-const totalPages = Math.ceil(usersCount / 5);
+const totalPages = Math.ceil(count / 5);
 const pages = [... new Array(totalPages).fill(0)];
 console.log(page, pages, pages.length);
     return (
@@ -35,10 +36,10 @@ console.log(page, pages, pages.length);
             <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
               <div>
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                  Users
+                  Delivery Men
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Add users, edit and more.
+                  Add delivery man, edit and more.
                 </p>
               </div>
               <div>
@@ -62,7 +63,7 @@ console.log(page, pages, pages.length);
                         strokeLinecap="round"
                       />
                     </svg>
-                    Add user
+                    Add delivery man
                   </Link>
                 </div>
               </div>
@@ -71,7 +72,7 @@ console.log(page, pages, pages.length);
             {/* Table */}
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
               <TableHead labels={labels}></TableHead>
-              <TableBody allUsers={allUsers} refetch={refetch} isFetching={isFetching}></TableBody>
+              <TableBody deliveryMen={deliveryMen} refetch={refetch} isFetching={isFetching}></TableBody>
             </table>
             {/* End Table */}
             {/* Footer */}
@@ -79,7 +80,7 @@ console.log(page, pages, pages.length);
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   <span className="font-semibold text-gray-800 dark:text-gray-200">
-                    {usersCount}
+                    {count}
                   </span>{" "}
                   results
                 </p>
@@ -153,4 +154,4 @@ console.log(page, pages, pages.length);
     );
 };
 
-export default Users;
+export default DeliveryMen;

@@ -8,7 +8,7 @@ export const getUsers = async (page) => {
 
 export const saveUser = async (userData) => {
     console.log(userData);
-    const user = await getRole(userData.email);
+    const user = await getUser(userData.email);
     const currentUser = {
         name: userData?.name || userData.displayName,
         email: userData?.email,
@@ -21,7 +21,7 @@ export const saveUser = async (userData) => {
     return data
 }
 
-export const getRole = async (email) => {
+export const getUser = async (email) => {
     console.log(email);
 
     const data = await axiosSecure.get(`/users/${email}`);

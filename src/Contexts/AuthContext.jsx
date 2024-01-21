@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../Configs/Firebase.config";
 import Swal from "sweetalert2";
 import toast from 'react-hot-toast';
-import { getRole, saveUser } from "../APIs/Auth";
+import { getUser, saveUser } from "../APIs/Auth";
 
 
 
@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         signInWithPopup(auth, googleProvider)
             .then(async user => {
                 setUser(user?.user);
-                const role = await getRole(user?.user?.email);
+                const role = await getUser(user?.user?.email);
                 console.log(role);
                 role?.data === '' && saveUser(user.user)
                 .then(toast.success("You have successfully logged in"))

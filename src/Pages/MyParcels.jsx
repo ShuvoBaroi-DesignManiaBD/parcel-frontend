@@ -1,27 +1,33 @@
 import { useState } from "react";
-import { getUsers } from "../../../APIs/Auth";
-import TableBody from "../../../Components/Table/UsersTable.jsx/TableBody";
-import TableHead from "../../../Components/Table/Shared/TableHead";
+// import { getUsers } from "../../../APIs/Auth";
+// import TableBody from "../../../Components/Table/UsersTable.jsx/TableBody";
+// import TableHead from "../../../Components/Table/UsersTable.jsx/TableHead";
 import { useQuery } from "@tanstack/react-query";
+import { getParcels } from "../APIs/parcels";
+import TableHead from "../Components/Table/Shared/TableHead";
+import TableBody from "../Components/Table/MyParcelsTable/TableBody";
+import { useAuth } from "../Hooks/useAuth";
 import { Link } from "react-router-dom";
 
-const Users = () => {
+
+const MyParcels = () => {
+  const {user} = useAuth();
   const [page, setPage] = useState(0);
-  const labels = ['Name', 'Role', 'Phone', 'Status', 'Parcel booked', 'Total spent ($)', 'Change role', 'Actions']
-  const { isFetching, refetch, data:{allUsers, usersCount} } = useQuery({
-    queryKey: ['users', page],
+  const TableHeadings = ["Parcel Type", "Requested Date", "Delivery Date", "Booking Date", "Delivery Men ID", "Booking Status", "Booking Actions", "Payment Status"]
+  const { isFetching, refetch, data:{currentPageItems, parcelsCount} } = useQuery({
+    queryKey: ['parcels', page],
     queryFn: async () => {
-        const res = await getUsers(page)
+        const res = await getParcels(user?.email, page)
         const data = await res.data;
         console.log(data);
         return data;
     },
-    initialData: {allUsers:[], usersCount:0}
+    initialData: {currentPageItems:[], parcelsCount:0}
 });
 
-const totalPages = Math.ceil(usersCount / 5);
+const totalPages = parcelsCount > 0 ? Math.ceil(parcelsCount / 5): 0;
 const pages = [... new Array(totalPages).fill(0)];
-console.log(page, pages, pages.length);
+console.log(currentPageItems, page, pages, pages.length);
     return (
         <>
   {/* Table Section */}
@@ -35,17 +41,17 @@ console.log(page, pages, pages.length);
             <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
               <div>
                 <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                  Users
+                  My Parcels
                 </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Add users, edit and more.
+                  Add parcels, edit and more.
                 </p>
               </div>
               <div>
                 <div className="inline-flex gap-x-2">
                   <Link
                     className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-primary text-white hover:bg-secondary disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    to='add-user'
+                    to='/dashboard/book-parcel'
                   >
                     <svg
                       className="flex-shrink-0 w-3 h-3"
@@ -62,7 +68,7 @@ console.log(page, pages, pages.length);
                         strokeLinecap="round"
                       />
                     </svg>
-                    Add user
+                    Book new
                   </Link>
                 </div>
               </div>
@@ -70,8 +76,8 @@ console.log(page, pages, pages.length);
             {/* End Header */}
             {/* Table */}
             <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <TableHead labels={labels}></TableHead>
-              <TableBody allUsers={allUsers} refetch={refetch} isFetching={isFetching}></TableBody>
+              <TableHead labels={TableHeadings}></TableHead>
+              <TableBody myParcels={currentPageItems} refetch={refetch} isFetching={isFetching}></TableBody>
             </table>
             {/* End Table */}
             {/* Footer */}
@@ -79,7 +85,7 @@ console.log(page, pages, pages.length);
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   <span className="font-semibold text-gray-800 dark:text-gray-200">
-                    {usersCount}
+                    {parcelsCount}
                   </span>{" "}
                   results
                 </p>
@@ -153,4 +159,4 @@ console.log(page, pages, pages.length);
     );
 };
 
-export default Users;
+export default MyParcels;

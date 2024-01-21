@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../../Hooks/useAuth";
 
 const SideNavLink = ({Icon, url, text, imageURL, className}) => {
+    const {pathname} = useLocation();
+    const path = pathname.split('/')[2] || pathname.split('/')[1]
+    console.log('pathname=',pathname, 'path=',path, url);
     const {logout} = useAuth();
-    const activeStatus = ({isActive}) => isActive && "bg-bg";
+    // const activeStatus = ({isActive}) => isActive && "bg-gray-600";
+    const activeStatus = () => (path === url) && "bg-bg";
     return (
-        <div>
             <NavLink className={`flex text font-medium items-center gap-x-3.5 py-2 px-2.5 text-slate-700 rounded-lg hover:bg-bg dark:bg-gray-900 dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600
-            ${activeStatus} ${className}
+            ${(path === url) && "bg-bg"} ${className}
             `}
                 to={url}
                 onClick={text === "Logout" ? logout : ''}
@@ -32,7 +35,7 @@ const SideNavLink = ({Icon, url, text, imageURL, className}) => {
                     {imageURL? <img src={imageURL} className="w-[20px]"/> : <Icon size="18"></Icon>}
                 {text}
             </NavLink>
-        </div>
+        
     );
 };
 
