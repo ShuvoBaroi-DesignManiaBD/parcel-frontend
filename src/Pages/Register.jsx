@@ -22,8 +22,9 @@ const Register = () => {
         const email = form.email.value;
         const role = form.role.value;
         const password = form.password.value;
+        console.log(image);
         const imageData = await imageUpload(image);
-        const photo = imageData?.data?.display_url;
+        const photo = imageData;
         const userData = { photo, name, email, password, role };
 
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[_.!@$*=?#-])[A-Za-z\d_.!@$*=?#-]{8,24}$/;

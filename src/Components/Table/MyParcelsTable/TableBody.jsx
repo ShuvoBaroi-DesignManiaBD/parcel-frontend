@@ -182,7 +182,7 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                             </td>
                             {/* User actions end */}
                         </tr>
-                        <Review isOpen={open} parcel={parcel} setOpen={setOpen} index={index} refetch={refetch}></Review>
+                        {/* <Review isOpen={open} parcel={parcel} setOpen={setOpen} index={index} refetch={refetch}></Review> */}
                         </>
                     );
                 })}

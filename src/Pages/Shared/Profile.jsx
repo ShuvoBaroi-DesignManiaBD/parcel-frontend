@@ -37,7 +37,8 @@ const Profile = () => {
     e.preventDefault();
     const form = e.target;
     const image = selectedImage;
-    const profilePhoto = image ? await imageUpload(image) : user?.photoURL;
+    const newImage = form.fileUpload.files[0]
+    const profilePhoto = image ? await imageUpload(newImage) : user?.photoURL;
     const name = form.name.value;
     const newPassword = form.newPassword.value;
 
@@ -47,6 +48,7 @@ const Profile = () => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[_.!@$*=?#-])[A-Za-z\d_.!@$*=?#-]{8,24}$/;
 
     try {
+      console.log(name, profilePhoto, selectedImage);
       await updateUserProfile(name, profilePhoto);
       if (newPassword !== '') {
         if (!regex.test(newPassword)) {
@@ -140,7 +142,7 @@ const Profile = () => {
                     <div>
 
                       <label
-                        htmlFor="file-upload"
+                        htmlFor="fileUpload"
                         className="cursor-pointer py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                       >
                         <svg
@@ -161,8 +163,8 @@ const Profile = () => {
                         </svg>
                         <span>Upload a file</span>
                         <input
-                          id="file-upload"
-                          name="file-upload"
+                          id="fileUpload"
+                          name="fileUpload"
                           type="file"
                           accept="images/*"
                           className="hidden z-50 appearance-none"
@@ -218,7 +220,7 @@ const Profile = () => {
               {/* End Col */}
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="af-account-full-name"
+                  htmlFor="af-account-role"
                   className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
                 >
                   Role
@@ -228,7 +230,7 @@ const Profile = () => {
               <div className="sm:col-span-9">
                 <div className="sm:flex">
                   <input
-                    id="af-account-full-name"
+                    id="af-account-role"
                     type="text"
                     className="py-2 px-3 pe-11 capitalize block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-primary focus:ring-primary disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                     placeholder="Your name"
