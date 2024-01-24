@@ -10,10 +10,10 @@ export const saveUser = async (userData) => {
     console.log(userData);
     const user = await getUser(userData.email);
     const currentUser = {
-        name: userData?.name || userData.displayName,
-        email: userData?.email,
+        name: userData?.name || user?.displayName,
+        email: userData?.email || user?.email,
         role: userData?.role || user?.role || 'user',
-        photo: userData?.photo || userData?.photoURL,
+        photo: userData?.photo || user?.photoURL,
     }
 
     console.log(currentUser);

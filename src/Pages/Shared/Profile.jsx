@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUser } from "../../APIs/Auth";
+import { getUser, saveUser } from "../../APIs/Auth";
 import { useAuth } from "../../Hooks/useAuth";
 import { useState } from "react";
 import { imageUpload } from "../../APIs/utils";
@@ -66,6 +66,19 @@ const Profile = () => {
       })
     }
 
+    try {
+      const photo = profilePhoto;
+      const email = user?.email;
+      const role = profile?.role;
+      const userData = {name, photo, email, role};
+      await saveUser(userData)
+    } catch(err) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Oops!',
+        text: err,
+      })
+    }
     return Swal.fire({
       icon: 'success',
       title: 'Update Success',
