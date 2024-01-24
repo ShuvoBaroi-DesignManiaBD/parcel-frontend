@@ -93,7 +93,11 @@ const TableBody = ({allParcels, refetch, isFetching}) => {
                                     </span>
                                 </div>
                             </td>
-                            <TableTd text={parcel?.paymentStatus || "---"}></TableTd>
+                            <TableTd text={((parcel?.status === 'Pending' || parcel?.status === 'Canceled') ? 'Unpaid' : 'Paid') || "---"}
+                            className={(parcel?.status === 'Pending' || parcel?.status === 'Canceled') ? 'font-semibold !text-red-900' : 'font-semibold text-green-800'}
+                            >
+
+                            </TableTd>
 
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className={`px-6 py-1.5 flex justify-center gap-4`}>
@@ -105,7 +109,7 @@ const TableBody = ({allParcels, refetch, isFetching}) => {
                                         Make deliveryman
                                     </button> */}
                                     <button
-                                        className="primaryButtonSm bg-secondary text-[10px] px-2.5 py-1.5 font-medium disabled:bg-gray-400"
+                                        className={`primaryButtonSm cursor-pointer bg-secondary ${parcel?.status === ('Pending' || 'Canceled') && 'bg-red-800'} text-[10px] px-2.5 py-1.5 font-medium disabled:bg-gray-400`}
                                         href="#"
                                         disabled={parcel?.role === 'admin' && true}
                                         onClick={()=> setOpen(index)}

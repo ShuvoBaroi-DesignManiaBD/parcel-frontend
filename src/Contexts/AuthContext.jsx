@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { updateProfile, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { updateProfile, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updatePassword, getAuth } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Configs/Firebase.config";
 import Swal from "sweetalert2";
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }) => {
                 setUser(user?.user);
                 console.log(user);
                 updateUserProfile(name, photo)
-                .then(toast.success("Your account created successfully"))
-                .catch(err => console.error(err));
+                    .then(toast.success("Your account created successfully"))
+                    .catch(err => console.error(err));
                 // return user
             })
             .catch((error) => {
@@ -75,8 +75,8 @@ export const AuthProvider = ({ children }) => {
                 const role = await getUser(user?.user?.email);
                 console.log(role);
                 role?.data === '' && saveUser(user.user)
-                .then(toast.success("You have successfully logged in"))
-                .catch(err => console.error(err));
+                    .then(toast.success("You have successfully logged in"))
+                    .catch(err => console.error(err));
                 // Swal.fire({
                 //     icon: 'success',
                 //     title: 'Success!!!',
@@ -120,6 +120,24 @@ export const AuthProvider = ({ children }) => {
             });
     }
 
+    const updateUserPass = (newPassword) => {
+        const user = auth.currentUser;
+
+        updatePassword(user, newPassword).then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'profile updated successfully',
+            })
+        }).catch((error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: error,
+            })
+        });
+    }
+
     // Update profile
     // const updateUserProfile  = (image, name) => {
     //     console.log(image, name);
@@ -132,12 +150,12 @@ export const AuthProvider = ({ children }) => {
     const updateUserProfile = async (name, photo) => {
         // const auth = getAuth();
         // Assuming 'user' is defined somewhere in your component or 
-        return updateProfile(auth.currentUser,{
+        return updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: photo
         })
     };
-    
+
 
     const authentication = {
         createUserWithEmail,
@@ -146,6 +164,7 @@ export const AuthProvider = ({ children }) => {
         googleLogin,
         logout,
         resetPass,
+        updateUserPass,
         loading,
         user,
         setUser

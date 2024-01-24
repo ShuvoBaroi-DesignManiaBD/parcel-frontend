@@ -9,10 +9,11 @@ import { useNavigate } from 'react-router-dom';
 import { Dialog } from '@material-tailwind/react';
 import Swal from 'sweetalert2';
 import { cancelParcel } from '../../../APIs/parcels';
+import Review from '../../Popups/Review';
 
 
 const TableBody = ({ myParcels, refetch, isFetching }) => {
-
+    const [open, setOpen] = useState(null);
     console.log(myParcels);
     const navigate = useNavigate();
 
@@ -34,16 +35,24 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
 
     }
 
+    const handlePay = () => {
+
+    }
+
     if (isFetching) {
         return <div className='w-[80vw] mx-auto flex justify-center items-center'><LoadingSpinner></LoadingSpinner></div>;
     } else {
         return (
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {myParcels?.map((parcel) => {
+                {myParcels?.map((parcel, index) => {
+                    const btnStyles = `primaryButtonSm mx-auto text-[14px] px-3 py-1.5 font-medium disabled:bg-gray-400 ${(parcel?.status == 'Pending' && 'bg-teal-500')
+                        || (parcel?.status == 'Delivered' && 'bg-orange-900') || (parcel?.status == 'Canceled' && 'bg-[#E3C5C3] disabled:bg-[#E3C5C3] disabled:text-text')
+                        }`
                     console.log(parcel);
                     const statusColor = parcel?.status && ((parcel.status == 'Pending' && "bg-[#FAE11E] text-text") || (parcel.status == 'On the way' && "bg-teal-100 text-teal-800") || (parcel.status == 'Delivered' && "bg-gray-300 text-text")
                         || (parcel.status == 'Canceled' && "bg-[#E3C5C3] text-text"));
                     return (
+                        <>
                         <tr key={parcel?._id || Date.now()}>
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="ps-6 py-3 pr-4">
@@ -61,9 +70,10 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                             <TableTd text={parcel?.type}></TableTd>
                             <TableTd text={parcel?.requestedDate}></TableTd>
                             <TableTd text={parcel?.deliveryDate || '---'}></TableTd>
-                            <TableTd text={parcel?.bookingDate? secondsToDate(parcel?.bookingDate) : "---"}></TableTd>
-                            <TableTd text={parcel?.deliveryMenId || "---"}></TableTd>
+                            <TableTd text={parcel?.bookingDate ? secondsToDate(parcel?.bookingDate) : "---"}></TableTd>
+                            <TableTd text={parcel?.deliveryManID || "---"}></TableTd>
 
+                            {/* Booking status start */}
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="px-6 py-3 text-center">
                                     <span className={`py-1 px-3 inline-flex items-center gap-x-1 text-xs font-medium rounded-full ${statusColor}`}>
@@ -71,10 +81,60 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                                     </span>
                                 </div>
                             </td>
+                            {/* Booking status end */}
 
+                            {/* Payment actions start */}
+                            <td className="h-px w-px whitespace-nowrap">
+                                <div className="px-6 py-1.5 flex gap-4 text-center">
+                                    {parcel?.status === 'Pending' &&
+                                        <button
+                                            className={btnStyles}
+                                            onClick={() => handlePay(parcel?.email, parcel?._id)}
+                                        >
+                                            Pay
+                                        </button>}
+                                    {parcel?.status === 'Delivered' &&
+                                        <button
+                                            className={btnStyles}
+                                            onClick={() => handlePay(parcel?.email, parcel?._id)}
+                                        >
+                                            Give review
+                                        </button>}
+                                    {parcel?.status === 'On the way' &&
+                                        <button
+                                            className={btnStyles}
+                                            onClick={() => handlePay(parcel?.email, parcel?._id)}
+                                            disabled
+                                        >
+                                            Paid
+                                        </button>}
+                                    {parcel?.status === 'Canceled' &&
+                                        <button
+                                            className={btnStyles}
+                                            onClick={() => handlePay(parcel?.email, parcel?._id)}
+                                            disabled
+                                        >
+                                            Canceled
+                                        </button>}
+                                    {/* <button
+                                        className={btnStyles}
+                                        disabled={parcel?.status !== ('Pending' || 'Delivered') && true}
+                                        onClick={() => handleChange(parcel?.email, parcel?._id)}
+                                    >
+                                        {((parcel?.status === ('On the way' || 'Returned')) && 'Paid')
+                                            || ((parcel?.status === 'Pending') && 'Pay')
+                                            || ((parcel?.status === 'Delivered') && 'Give review')
+                                            || ((parcel?.status === 'Canceled') && 'Canceled')}
+                                    </button> */}
+
+                                </div>
+                            </td>
+                            {/* Payment actions end */}
+
+                            {/* User actions start */}
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className={`px-6 py-1.5 flex justify-center gap-4`}>
-                                    {parcel?.status == 'pending' &&
+                                    {parcel?.status == 'Pending' ?
                                         <>
                                             <button
                                                 className="text-sm text-primary font-bold underline disabled:bg-gray-400"
@@ -117,28 +177,13 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                                                 Cancel
                                             </button>
 
-                                        </>}
+                                        </> : <button disabled className='text-[13px] font-medium text-red-800/70'>Edit not allowed</button>}
                                 </div>
                             </td>
-                            <td className="h-px w-px whitespace-nowrap">
-                                <div className="px-6 py-1.5 flex gap-4">
-                                    <button
-                                        className={`primaryButtonSm text-[14px] px-3 py-1.5 font-medium disabled:bg-gray-400 ${(parcel?.status == 'pending' && 'bg-teal-500')
-                                            || (parcel?.status == 'delivered' && 'bg-orange-900')
-                                            }`}
-                                        disabled={parcel?.status !== ('pending' || 'delivered') && true}
-                                        onClick={() => handleChange(parcel?.email, parcel?._id)}
-                                    >
-                                        {((parcel?.status === ('on the way' || 'returned')) && 'Paid')
-                                            || ((parcel?.status === 'pending') && 'Pay')
-                                            || ((parcel?.status === 'delivered') && 'Give review')
-                                            || ((parcel?.status === 'canceled') && 'Canceled')}
-                                    </button>
-
-                                </div>
-                            </td>
+                            {/* User actions end */}
                         </tr>
-
+                        <Review isOpen={open} parcel={parcel} setOpen={setOpen} index={index} refetch={refetch}></Review>
+                        </>
                     );
                 })}
 

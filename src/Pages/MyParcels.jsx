@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const MyParcels = () => {
   const {user} = useAuth();
   const [page, setPage] = useState(0);
-  const TableHeadings = ["Parcel Type", "Requested Date", "Delivery Date", "Booking Date", "Delivery Men ID", "Booking Status", "Booking Actions", "Payment Status"]
+  const TableHeadings = ["Parcel Type", "Requested Date", "Delivery Date", "Booking Date", "Delivery Men ID", "Booking Status", "Payment Actions", "Actions",]
   const { isFetching, refetch, data:{currentPageItems, parcelsCount} } = useQuery({
     queryKey: ['parcels', page],
     queryFn: async () => {
@@ -116,7 +116,7 @@ console.log(currentPageItems, page, pages, pages.length);
                   {pages?.map((item, index) =>{
                     return <button key={index}
                     type="button"
-                    className={`py-2 px-3 text-sm font-medium rounded-lg border border-gray-200 text-text shadow-sm hover:bg-gray-50 ${page == index ? 'bg-primary text-white' : ''}`}
+                    className={`py-2 px-3 text-sm font-medium rounded-lg border border-gray-200 text-text shadow-sm hover:bg-gray-50 ${page == index ? 'bg-primary text-white hover:bg-primary/90' : ''}`}
                     onClick={()=> setPage(index)}
                   >
                     {index + 1}

@@ -3,7 +3,7 @@ import { CgCloseO } from "react-icons/cg";
 import { updateParcel } from "../../APIs/parcels";
 import toast from "react-hot-toast";
 
-const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) => {
+const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,9 +14,9 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) 
     const status = form.status.value;
     const receiversName = form.receiversName.value;
     const receiversPhone = form.receiversPhone.value;
-    const deliveryMan = form.deliveryMan.value;
     const deliveryAddress = form.deliveryAddress.value;
     const deliveryManID = form.deliveryManId.value;
+    const deliveryMan = form.deliveryMan.value;
     const deliveryDate = form.deliveryDate.value;
 
     const data = {
@@ -47,7 +47,6 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) 
         <div className="flex justify-end">
           <CgCloseO className="w-8 h-8 text-red-500" onClick={() => setOpen(null)}></CgCloseO>
         </div>
-        
         <div className="mx-auto lg:py-16">
           <h2 className="mb-4 secondaryHeading text-center font-bold text-gray-900 dark:text-white">
             Assign a delivery man
@@ -265,4 +264,4 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) 
   );
 };
 
-export default ManageParcel;
+export default Review;
