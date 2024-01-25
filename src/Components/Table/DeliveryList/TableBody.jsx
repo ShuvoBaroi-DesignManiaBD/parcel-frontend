@@ -67,7 +67,7 @@ const TableBody = ({ list, refetch, isFetching }) => {
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                 {list?.map((parcel) => {
                     console.log(parcel);
-                    const btnStyles = `primaryButton mx-auto text-[12px] px-3 py-1 font-medium disabled:bg-gray-400 disabled:text-text${
+                    const btnStyles = `primaryButton mx-auto text-[12px] px-3 py-1 font-medium disabled:bg-gray-400 disabled:text-text ${
                         (parcel.status == 'Delivered' && "bg-gray-300 text-text")
                         || (parcel.status == 'Canceled' && "bg-red-100 text-text") || (parcel.status == 'Completed' && "bg-secondary text-white")
                         }`
@@ -147,7 +147,7 @@ const TableBody = ({ list, refetch, isFetching }) => {
                             </td> */}
                             <td className="h-px w-px whitespace-nowrap">
                                 <div className="px-6 py-1.5 flex gap-4">
-                                    {parcel?.status !== 'Delivered' && 
+                                    {(parcel?.status === 'On the way') ? 
                                     <>
                                     <a
                                     className="primaryButton bg-red-800 mx-auto text-[12px] px-3 py-1"
@@ -157,19 +157,19 @@ const TableBody = ({ list, refetch, isFetching }) => {
                                 </a>
                                 <a
                                     className={btnStyles}
-                                    disabled={parcel?.status === ('Cancelled' || 'Delivered' || 'Completed') && true}
+                                    disabled={((parcel?.status === 'Cancelled') || (parcel?.status === 'Delivered') || (parcel?.status === 'Completed')) && true}
                                     onClick={()=>handleChange(parcel?._id, 'Delivered')}
                                 >
                                     Deliver
                                 </a>
-                                    </>
+                                    </> : ''
                                     }
                                     {parcel?.status !== 'On the way' &&
                                     <a
                                     className="primaryButton bg-gray-200 text-[12px] px-3 py-1 text-text hover:bg-gray-200 hover:text-text"
                                     disabled
                                 >
-                                    {parcel?.status !== 'Completed'? parcel?.status : 'Review given'}
+                                    {parcel?.status !== 'Completed'? parcel?.status : 'Review received'}
                                 </a>
                                     }
                                 </div>

@@ -43,3 +43,5 @@ The Parcel Management App is an online platform developed using the MERN stack t
 This project is for learning and practice purposes only.
 
 ---
+
+### Assignment Details
