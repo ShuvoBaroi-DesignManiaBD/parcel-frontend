@@ -2,11 +2,12 @@ import { Dialog, DialogBody } from "@material-tailwind/react";
 import { CgCloseO } from "react-icons/cg";
 import { updateParcel, updateParcelStatus } from "../../APIs/parcels";
 import toast from "react-hot-toast";
-import { getDeliveryMan, getUser } from "../../APIs/Auth";
+import { getUser } from "../../APIs/Auth";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import {Rating, Typography} from "@material-tailwind/react";
 import { addReview, getReview } from "../../APIs/review";
+import { getDeliveryMan } from "../../APIs/deliveryMan";
 
 const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
   

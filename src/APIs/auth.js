@@ -23,15 +23,7 @@ export const saveUser = async (userData) => {
 
 export const getUser = async (email) => {
     console.log(email);
-
     const data = await axiosSecure.get(`/users/${email}`);
-    return data
-}
-
-export const getDeliveryMan = async (id) => {
-    console.log(id);
-
-    const data = await axiosSecure.get(`/deliveryman/${id}`);
     return data
 }
 

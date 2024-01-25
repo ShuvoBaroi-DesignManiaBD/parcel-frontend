@@ -9,3 +9,15 @@ export const getAllDeliveryMan = async (page) => {
     const data = await axiosSecure.get(`/allDeliveryMan`);
     return data
 }
+
+export const getDeliveryMan = async (id) => {
+    console.log(id);
+    const data = await axiosSecure.get(`/deliveryman/${id}`);
+    return data
+}
+
+export const getDeliveryList = async (id, page) => {
+    console.log(id);
+    const data = await axiosSecure.get(`/get-delivery-list?id=${id}&page=${page}`);
+    return data
+}

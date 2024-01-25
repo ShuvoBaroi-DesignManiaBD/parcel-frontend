@@ -15,6 +15,7 @@ import BookParcel from "../Pages/Dashboard/User/BookParcel";
 import MyParcels from "../Pages/MyParcels";
 import UpdateParcel from "../Pages/UpdateParcel";
 import DeliveryMen from "../Pages/Dashboard/DeliveryMen/DeliveryMen";
+import MyDeliveryList from "../Pages/Dashboard/DeliveryMen/MyDeliveryList";
 
 
 
@@ -66,6 +67,10 @@ const Routes = createBrowserRouter([
       {
         path: 'deliverymen',
         element: <AdminRoute><DeliveryMen></DeliveryMen></AdminRoute>
+      },
+      {
+        path: 'delivery-list',
+        element: <MyDeliveryList></MyDeliveryList>
       },
       {
         path: 'profile',

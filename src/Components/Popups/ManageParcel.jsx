@@ -14,9 +14,9 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) 
     const status = form.status.value;
     const receiversName = form.receiversName.value;
     const receiversPhone = form.receiversPhone.value;
-    const deliveryMan = form.deliveryMan.value;
-    const deliveryAddress = form.deliveryAddress.value;
     const deliveryManID = form.deliveryManId.value;
+    const deliveryMan = deliveryMen.find(deliveryMan=>deliveryMan?._id === deliveryManID)?.name;
+    const deliveryAddress = form.deliveryAddress.value;
     const deliveryDate = form.deliveryDate.value;
 
     const data = {
@@ -191,14 +191,14 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) 
                   Select Delivery man
                 </label>
                 <select
-                  id="deliveryMan"
+                  id="deliveryManId"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   name="deliveryManId"
                 >
                   <option selected="">Select delivery man</option>
                   {deliveryMen.map(man => {
                     return <>
-                      <option value={man._id} key={man._id}>{man.name}</option>
+                      <option selected={parcel?.deliveryManID === man?._id ? true : false} value={man._id} key={man._id}>{man.name}</option>
                     </>
                   })}
                 </select>
@@ -236,18 +236,18 @@ const ManageParcel = ({ parcel, deliveryMen, index, isOpen, setOpen, refetch }) 
                   id="deliveryDate"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Parcel delivery date"
-                  defaultValue={Date.now()}
+                  defaultValue={parcel?.deliveryDate || Date.now()}
                   required
                 />
 
               </div>
               {/* Requested Delivery Date */}
               <div className="flex gap-3 justify-end col-span-3">
-                <button
+                {/* <button
                   className="primaryButton px-10 bordr-2 border mt-5 bg-secondary"
                 >
                   Update
-                </button>
+                </button> */}
                 <button
                   type="submit"
                   className="primaryButton bordr-2 border mt-5 px-10"
