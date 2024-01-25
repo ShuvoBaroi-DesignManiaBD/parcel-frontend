@@ -2,10 +2,11 @@ import { Dialog, DialogBody } from "@material-tailwind/react";
 import { CgCloseO } from "react-icons/cg";
 import { updateParcel, updateParcelStatus } from "../../APIs/parcels";
 import toast from "react-hot-toast";
-import { addReview, getDeliveryMan, getUser } from "../../APIs/Auth";
+import { getDeliveryMan, getUser } from "../../APIs/Auth";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import {Rating, Typography} from "@material-tailwind/react";
+import { addReview, getReview } from "../../APIs/review";
 
 const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
   
@@ -14,6 +15,17 @@ const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
     queryKey: ['deliveryMan'],
     queryFn: async () => {
       const res = await getDeliveryMan(parcel?.deliveryMan)
+      const data = await res.data;
+      console.log(data);
+      return data;
+    },
+    initialData: {}
+  })
+
+  const { data: userReview } = useQuery({
+    queryKey: ['review'],
+    queryFn: async () => {
+      const res = await getReview(parcel?._id)
       const data = await res.data;
       console.log(data);
       return data;
@@ -151,28 +163,6 @@ const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
               {/* End Grid */}
             </div>
             <div className="grid gap-4 col-span-7 sm:grid-cols-3 sm:gap-6 pb-8 ml-5">
-              {/* User name */}
-              {/* <div className="grid-cols-3 lg:grid-cols-1">
-                <label
-                  htmlFor="name"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Parcel Owner:
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  defaultValue={parcel?.name}
-                  readOnly
-                  placeholder="Your name"
-                  required
-                />
-
-              </div> */}
-              {/* User name */}
-
               {/* Parcel type */}
               <div className="grid-cols-3 lg:grid-cols-1">
                 <label
@@ -239,7 +229,9 @@ const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
               {/* Requested Delivery Date */}
               <div className="col-span-full flex items-center gap-2 font-bold text-blue-gray-500">
                 <h5 className="text-text font-medium">How was our performance? </h5>
-                <Rating value={4} onChange={(value) => setRated(value)} />
+                <Rating value={parcel?.status === 'Completed' ? userReview?.rating : 4} onChange={(value) => setRated(value)} 
+                readonly={parcel?.status === 'Completed' ? true : false}
+                />
               </div>
               <div className="col-span-full">
                 <label
@@ -254,71 +246,10 @@ const Review = ({ parcel, index, isOpen, setOpen, refetch }) => {
                   rows={4}
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary"
                   placeholder="Write your thoughts here..."
-                  defaultValue={""}
+                  defaultValue={parcel?.status === 'Completed' ? userReview?.feedback : ''}
+                  readOnly={parcel?.status === 'Completed' ? true : false}
                 />
               </div>
-
-              {/* Receivers name */}
-              {/* <div className="grid-cols-3 lg:grid-cols-1">
-                <label
-                  htmlFor="receiversName"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Receivers name
-                </label>
-                <input
-                  type="text"
-                  name="receiversName"
-                  id="receiversName"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="eg. Kian Shy"
-                  defaultValue={parcel?.receiversName}
-                  required
-                />
-
-              </div> */}
-              {/* Receivers name */}
-
-              {/* Receivers Phone number */}
-              {/* <div className="w-full">
-                <label
-                  htmlFor="receiversPhone"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Receivers phone number
-                </label>
-                <input
-                  type="number"
-                  name="receiversPhone"
-                  id="receiversPhone"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="eg. +8801723423467"
-                  defaultValue={parcel?.receiversPhone}
-                  required
-                />
-              </div> */}
-              {/* Receivers Phone number */}
-
-              {/* Parcel delivery address */}
-              {/* <div className="grid-cols-3 lg:grid-cols-1">
-                <label
-                  htmlFor="deliveryAddress"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Parcel delivery address
-                </label>
-                <input
-                  type="text"
-                  name="deliveryAddress"
-                  id="deliveryAddress"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="i.e 1068/1 taltola, post 3000, Dhaka"
-                  defaultValue={parcel?.deliveryAddress}
-                  required
-                />
-
-              </div> */}
-              {/* Parcel delivery address */}
 
             {parcel?.status !== 'Completed' && <input type="submit" className="primaryButton" value="submit Review"/>}
             </div>

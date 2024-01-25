@@ -42,8 +42,3 @@ export const changeRole = async (email, role) => {
     return data
 }
 
-// ======== Review related hooks =======
-export const addReview = async (review) => {
-    const result = await axiosSecure.post(`/addreview`, review);
-    return result
-}
