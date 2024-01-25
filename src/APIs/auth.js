@@ -28,9 +28,22 @@ export const getUser = async (email) => {
     return data
 }
 
+export const getDeliveryMan = async (id) => {
+    console.log(id);
+
+    const data = await axiosSecure.get(`/deliveryman/${id}`);
+    return data
+}
+
 export const changeRole = async (email, role) => {
     const userData = {role};
     console.log(email, role);
     const {data} = await axiosSecure.patch(`/changeRole/${email}`, userData);
     return data
+}
+
+// ======== Review related hooks =======
+export const addReview = async (review) => {
+    const result = await axiosSecure.post(`/addreview`, review);
+    return result
 }

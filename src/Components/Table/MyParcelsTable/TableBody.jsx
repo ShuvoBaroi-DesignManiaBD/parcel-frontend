@@ -50,7 +50,7 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                         }`
                     console.log(parcel);
                     const statusColor = parcel?.status && ((parcel.status == 'Pending' && "bg-[#FAE11E] text-text") || (parcel.status == 'On the way' && "bg-teal-100 text-teal-800") || (parcel.status == 'Delivered' && "bg-gray-300 text-text")
-                        || (parcel.status == 'Canceled' && "bg-[#E3C5C3] text-text"));
+                        || (parcel.status == 'Canceled' && "bg-red-100 text-text") || (parcel.status == 'Completed' && "bg-secondary/20 text-text"));
                     return (
                         <>
                         <tr key={parcel?._id || Date.now()}>
@@ -96,7 +96,7 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                                     {parcel?.status === 'Delivered' &&
                                         <button
                                             className={btnStyles}
-                                            onClick={() => handlePay(parcel?.email, parcel?._id)}
+                                            onClick={() => setOpen(index)}
                                         >
                                             Give review
                                         </button>}
@@ -107,6 +107,13 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                                             disabled
                                         >
                                             Paid
+                                        </button>}
+                                    {parcel?.status === 'Completed' &&
+                                        <button
+                                            className={btnStyles}
+                                            onClick={() => setOpen(index)}
+                                        >
+                                            View Review
                                         </button>}
                                     {parcel?.status === 'Canceled' &&
                                         <button
@@ -182,7 +189,7 @@ const TableBody = ({ myParcels, refetch, isFetching }) => {
                             </td>
                             {/* User actions end */}
                         </tr>
-                        {/* <Review isOpen={open} parcel={parcel} setOpen={setOpen} index={index} refetch={refetch}></Review> */}
+                        <Review isOpen={open} parcel={parcel} setOpen={setOpen} index={index} refetch={refetch}></Review>
                         </>
                     );
                 })}

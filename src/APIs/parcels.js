@@ -15,8 +15,14 @@ export const updateParcel = async (parcel, id) => {
     return data
 }
 
+
 export const cancelParcel = async (id) => {
     const data = await axiosSecure.patch(`/cancelParcel?id=${id}`);
+    return data
+}
+
+export const updateParcelStatus = async (id, status) => {
+    const data = await axiosSecure.put(`/change-parcel-status?id=${id}&status=${status}`);
     return data
 }
 
@@ -24,6 +30,7 @@ export const allParcels = async (page) => {
     const data = await axiosSecure.get(`/allParcels?page=${page}`);
     return data
 }
+
 
 
 
