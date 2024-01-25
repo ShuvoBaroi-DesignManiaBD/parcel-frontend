@@ -44,4 +44,3 @@ This project is for learning and practice purposes only.
 
 ---
 
-### Assignment Details
